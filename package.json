@@ -1,0 +1,44 @@
+{
+  "name": "@activewidgets/plugins",
+  "version": "0.0.5",
+  "description": "activewidgets grid plugins",
+  "author": "webmaster@activewidgets.com",
+  "license": "MIT",
+  "main": "./dist/ax-plugins.js",
+  "module": "./dist/ax-plugins.esm.js",
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "npm run lint && rollup -c",
+    "lint": "eslint **/*.js -f unix"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "eslint": "^5.0.0",
+    "rollup": "^1.0.0",
+    "rollup-plugin-babel": "^4.0.0",
+    "rollup-plugin-node-resolve": "^4.0.0"
+  },
+  "eslintConfig": {
+    "extends": "eslint:recommended",
+    "parserOptions": {
+      "ecmaVersion": 6,
+      "sourceType": "module"
+    },
+    "globals": {
+      "Promise": true
+    },
+    "env": {
+      "browser": true
+    }
+  },
+  "eslintIgnore": [
+    "dist"
+  ],
+  "postcss": {},
+  "private": true
+}
