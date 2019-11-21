@@ -1,0 +1,6 @@
+{
+  "name": "@activewidgets/plugins/text",
+  "main": "../dist/ax-text.js",
+  "module": "../dist/ax-text.esm.js",
+  "private": true
+}
