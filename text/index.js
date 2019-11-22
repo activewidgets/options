@@ -7,17 +7,22 @@ function toRange({limit, offset}){
 }
 
 
-function parseText(txt, range, config){
+function parseText(txt, range, config, context){
 
     if (!String(range).match(/(\d+)-(\d+)\/(\d+)/)){
         throw 'incorrect range ' + range;
     }
 
+    if (!context.parser){
+        context.parser = new Parser(config);
+        context.before = {};
+        context.after = {};
+    }
+
     let start = Number(RegExp.$1),
         end = Number(RegExp.$2) + 1,
         max = Number(RegExp.$3),
-        papa = new Parser(config),
-        results = papa.parse(txt, 0, true),
+        results = context.parser.parse(txt, 0, true),
         items = results.data.slice(1);
 
     return {start, end, max, items};
@@ -37,21 +42,21 @@ function plugin({state, update, on}, config){
     });
 
 
-    methods.fetch = function(url, params){
+    methods.fetch = function(url, params, context){
         range = toRange(params);
-        return fetch(url, params);
+        return fetch(url, params, context);
     };
 
 
-    methods.parse = function(res){
+    methods.parse = function(res, context){
 
         if (!res || typeof res.text != 'function'){
-            return parse(res);
+            return parse(res, context);
         }
 
         let range = res.headers.get('content-range');
 
-        return res.text().then(data => parseText(data, range, config));
+        return res.text().then(data => parseText(data, range, config, context));
     };
 
 

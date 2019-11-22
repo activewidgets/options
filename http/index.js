@@ -14,10 +14,10 @@ function plugin({state, update, emit}, config){
 
     let {fetch, parse} = state(), methods = {};
 
-    methods.fetch = function(url, params){
+    methods.fetch = function(url, params, context){
 
         if (typeof url != 'string'){
-            return fetch(url, params);
+            return fetch(url, params, context);
         }
 
         let req = request(url, params, config);
@@ -28,13 +28,13 @@ function plugin({state, update, emit}, config){
     };
 
 
-    methods.parse = function(res){
+    methods.parse = function(res, context){
 
         if (!res || typeof res.json != 'function'){
-            return parse(res);
+            return parse(res, context);
         }
 
-        return res.json().then(parse);
+        return res.json().then(v => parse(v, context));
     };
 
     update(methods);
