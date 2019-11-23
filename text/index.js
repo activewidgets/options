@@ -7,23 +7,59 @@ function toRange({limit, offset}){
 }
 
 
-function parseText(txt, range, config, context){
+function initParser(config, start, end){
+
+    let items, sizes;
+
+    config.step = function({data, errors, meta}){
+        items.push(data[0]);
+        sizes.push(meta.cursor);
+    };
+
+    let papa = new Parser(config),
+        before = {},
+        after = {};
+
+    return function(input, start, end, max){
+
+        let skipFirst = 1,
+            skipLast = end < max ? 1 : 0;
+
+        if (start in before){
+            input = before[start] + input;
+            skipFirst = 0;
+        }
+
+        if (end in after){
+            input += after[end];
+        }
+
+        items = [];
+        sizes = [];
+        papa.parse(input, 0, skipLast);
+
+        after[start] = input.slice(0, sizes[0]);
+        before[end] = input.slice(sizes[sizes.length-1]);
+
+        return items.slice(skipFirst);
+    };
+}
+
+
+function parseText(input, range, config, context){
 
     if (!String(range).match(/(\d+)-(\d+)\/(\d+)/)){
         throw 'incorrect range ' + range;
     }
 
-    if (!context.parser){
-        context.parser = new Parser(config);
-        context.before = {};
-        context.after = {};
+    if (!context.parse){
+        context.parse = initParser(config);
     }
 
     let start = Number(RegExp.$1),
         end = Number(RegExp.$2) + 1,
         max = Number(RegExp.$3),
-        results = context.parser.parse(txt, 0, true),
-        items = results.data.slice(1);
+        items = context.parse(input, start, end, max);
 
     return {start, end, max, items};
 }
