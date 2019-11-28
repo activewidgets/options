@@ -2,11 +2,11 @@
 import resolve from 'rollup-plugin-node-resolve';
 import babel from 'rollup-plugin-babel';
 
-let main = {plugins: 'index.js'};
+let main = {options: 'index.js'};
 
 let globals = {};
 
-let umd = {dir: 'dist', entryFileNames: 'ax-[name].js', format: 'umd', sourcemap: true, name: 'ActiveWidgets.plugins', extend: true, globals},
+let umd = {dir: 'dist', entryFileNames: 'ax-[name].js', format: 'umd', sourcemap: true, name: 'ActiveWidgets.options', extend: true, globals},
     esm = {dir: 'dist', entryFileNames: 'ax-[name].esm.js', format: 'esm', sourcemap: true};
 
 let external = Object.keys(globals);

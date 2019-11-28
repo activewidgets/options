@@ -1,11 +1,11 @@
 {
-  "name": "@activewidgets/plugins",
+  "name": "@activewidgets/options",
   "version": "0.0.5",
-  "description": "activewidgets grid plugins",
+  "description": "activewidgets grid configuration options",
   "author": "webmaster@activewidgets.com",
   "license": "MIT",
-  "main": "./dist/ax-plugins.js",
-  "module": "./dist/ax-plugins.esm.js",
+  "main": "./dist/ax-options.js",
+  "module": "./dist/ax-options.esm.js",
   "files": [
     "dist",
     "LICENSE",
