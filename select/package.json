@@ -1,5 +1,5 @@
 {
-  "name": "@activewidgets/plugins/select",
+  "name": "@activewidgets/options/select",
   "main": "../dist/ax-select.js",
   "module": "../dist/ax-select.esm.js",
   "private": true

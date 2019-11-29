@@ -1,5 +1,5 @@
 {
-  "name": "@activewidgets/plugins/csv",
+  "name": "@activewidgets/options/csv",
   "main": "../dist/ax-csv.js",
   "module": "../dist/ax-csv.esm.js",
   "private": true

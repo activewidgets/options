@@ -1,5 +1,5 @@
 {
-  "name": "@activewidgets/plugins/locale",
+  "name": "@activewidgets/options/locale",
   "main": "../dist/ax-locale.js",
   "module": "../dist/ax-locale.esm.js",
   "private": true
