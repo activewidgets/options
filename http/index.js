@@ -1,5 +1,5 @@
 
-function request(url, params, config){
+function request(url, params){
     let headers = {accept: 'application/json'};
     return {url, params, headers};
 }

@@ -7,11 +7,11 @@ function toRange({limit, offset}){
 }
 
 
-function initParser(config, start, end){
+function initParser(config){
 
     let items, sizes;
 
-    config.step = function({data, errors, meta}){
+    config.step = function({data, meta}){
         items.push(data[0]);
         sizes.push(meta.cursor);
     };

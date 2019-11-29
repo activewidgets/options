@@ -1,6 +1,6 @@
 
 export default function(){
-    return function({props, state, update, on, emit, cls}){
+    return function({update, on, cls}){
 
         let selected = 0;
 
