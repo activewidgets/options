@@ -1,0 +1,6 @@
+{
+  "name": "@activewidgets/options/format",
+  "main": "../dist/ax-format.js",
+  "module": "../dist/ax-format.esm.js",
+  "private": true
+}
