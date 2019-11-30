@@ -1,0 +1,6 @@
+{
+  "name": "@activewidgets/options/type",
+  "main": "../dist/ax-type.js",
+  "module": "../dist/ax-type.esm.js",
+  "private": true
+}

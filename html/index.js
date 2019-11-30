@@ -1,18 +1,13 @@
 
+import type from '../type';
+
 export default function(){
-    return function({state}){
 
-        let {types} = state();
+    function format(v){
+        let output = [];
+        output.__html = v;
+        return output;
+    }
 
-        if (!types.html){
-            types.html = {formats: {}};
-        }
-
-        types.html.template = 'html';
-        types.html.formats.default = function(v){
-            let output = [];
-            output.__html = v;
-            return output;
-        }
-    };
+    return type('html', {template: 'html', formats: {default: format}});
 }

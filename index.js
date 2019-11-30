@@ -8,3 +8,4 @@ export {default as row} from './row/index.js';
 export {default as select} from './select/index.js';
 export {default as text} from './text/index.js';
 export {default as tsv} from './tsv/index.js';
+export {default as type} from './type/index.js';
