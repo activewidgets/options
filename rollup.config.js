@@ -6,7 +6,7 @@ let main = {options: 'index.js'};
 
 let globals = {};
 
-let umd = {dir: 'dist', entryFileNames: 'ax-[name].js', format: 'umd', sourcemap: true, name: 'ActiveWidgets.options', extend: true, globals},
+let umd = {dir: 'dist', entryFileNames: 'ax-[name].js', format: 'umd', sourcemap: true, name: 'ActiveWidgets.Options', extend: true, globals},
     esm = {dir: 'dist', entryFileNames: 'ax-[name].esm.js', format: 'esm', sourcemap: true};
 
 let external = Object.keys(globals);
