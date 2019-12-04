@@ -1,12 +1,12 @@
 
 export default function(){
-    return function({update, on, cls}){
+    return function({on, emit, cls}){
 
         let selected = 0;
 
         on('mouse', function({row}){
             selected = row.start;
-            update({refresh: {}});
+            emit('refresh', 'rows');
         });
 
         on('row', function(row){
