@@ -4,7 +4,7 @@
   "description": "activewidgets grid configuration options",
   "author": "webmaster@activewidgets.com",
   "license": "MIT",
-  "main": "./dist/ax-options.js",
+  "main": "./dist/ax-options.umd.js",
   "module": "./dist/ax-options.esm.js",
   "files": [
     "dist",
