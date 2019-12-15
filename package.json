@@ -40,5 +40,15 @@
     "dist"
   ],
   "postcss": {},
-  "private": true
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/activewidgets/options.git"
+  },
+  "keywords": [
+    "react"
+  ],
+  "bugs": {
+    "url": "https://github.com/activewidgets/options/issues"
+  },
+  "homepage": "https://github.com/activewidgets/options#readme"
 }
