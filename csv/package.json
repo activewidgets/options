@@ -1,6 +1,6 @@
 {
   "name": "@activewidgets/options/csv",
-  "main": "../dist/cjs/csv.js",
+  "main": "../dist/csv.js",
   "module": "../dist/esm/csv.js",
   "private": true
 }

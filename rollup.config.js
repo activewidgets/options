@@ -28,16 +28,14 @@ function expand({name, input}){
         pkg = JSON.parse(read(path.join(dir, 'package.json'))),
         main = path.join(dir, pkg.main),
         module = path.join(dir, pkg.module),
-        browser = path.join('dist', path.basename(pkg.name) + '.js'),
         sourcemap = true,
         extend = true;
 
     return {
         input,
         output: [
-            {file: main, format: 'cjs', sourcemap},
-            {file: module, format: 'esm', sourcemap},
-            {file: browser, format: 'umd', sourcemap, name, extend}
+            {file: main, format: 'umd', sourcemap, name, extend},
+            {file: module, format: 'esm', sourcemap}
         ],
         plugins
     };

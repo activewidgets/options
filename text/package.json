@@ -1,6 +1,6 @@
 {
   "name": "@activewidgets/options/text",
-  "main": "../dist/cjs/text.js",
+  "main": "../dist/text.js",
   "module": "../dist/esm/text.js",
   "private": true
 }
