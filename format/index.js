@@ -1,5 +1,5 @@
 
-import type from '../type';
+import type from '../type/index.js';
 
 export default function(name, fn){
 
