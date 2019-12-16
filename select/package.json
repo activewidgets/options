@@ -1,6 +1,6 @@
 {
   "name": "@activewidgets/options/select",
-  "main": "../dist/ax-select.js",
-  "module": "../dist/ax-select.esm.js",
+  "main": "../dist/cjs/select.js",
+  "module": "../dist/esm/select.js",
   "private": true
 }

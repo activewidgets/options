@@ -1,6 +1,6 @@
 {
   "name": "@activewidgets/options/row",
-  "main": "../dist/ax-row.js",
-  "module": "../dist/ax-row.esm.js",
+  "main": "../dist/cjs/row.js",
+  "module": "../dist/esm/row.js",
   "private": true
 }

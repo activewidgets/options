@@ -1,6 +1,6 @@
 {
   "name": "@activewidgets/options/html",
-  "main": "../dist/ax-html.js",
-  "module": "../dist/ax-html.esm.js",
+  "main": "../dist/cjs/html.js",
+  "module": "../dist/esm/html.js",
   "private": true
 }

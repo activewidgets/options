@@ -1,6 +1,6 @@
 {
   "name": "@activewidgets/options/http",
-  "main": "../dist/ax-http.js",
-  "module": "../dist/ax-http.esm.js",
+  "main": "../dist/cjs/http.js",
+  "module": "../dist/esm/http.js",
   "private": true
 }
