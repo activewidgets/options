@@ -14,9 +14,13 @@
   ],
   "scripts": {
     "build": "npm run lint && rollup -c",
-    "lint": "eslint **/*.js -f unix"
+    "lint": "eslint **/*.js -f unix",
+    "test": "jest"
   },
   "devDependencies": {
+    "@activewidgets/datagrid": "https://cdn.activewidgets.com/packages/datagrid-0.0.6.tgz",
+    "@activewidgets/frameworks": "https://cdn.activewidgets.com/packages/frameworks-0.0.6.tgz",
+    "@activewidgets/testing": "^0.0.1",
     "@babel/core": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
     "@rollup/plugin-node-resolve": "^6.0.0",
@@ -41,6 +45,16 @@
   "eslintIgnore": [
     "dist"
   ],
+  "jest": {
+    "preset": "@activewidgets/testing",
+    "moduleNameMapper": {
+      "@activewidgets/components": "@activewidgets/datagrid",
+      "@activewidgets/options": "<rootDir>/"
+     },
+    "testMatch": [
+      "<rootDir>/*/unit.js"
+    ]
+  },
   "postcss": {},
   "repository": {
     "type": "git",
