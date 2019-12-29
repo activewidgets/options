@@ -9,6 +9,7 @@
   "files": [
     "dist",
     "*/package.json",
+    "*/unit.js",
     "LICENSE",
     "README.md"
   ],
