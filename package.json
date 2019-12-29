@@ -14,7 +14,7 @@
     "README.md"
   ],
   "scripts": {
-    "build": "npm run lint && rollup -c",
+    "build": "npm run lint && rimraf dist && rollup -c",
     "lint": "eslint **/*.js -f unix",
     "test": "jest"
   },
@@ -26,6 +26,7 @@
     "@babel/preset-env": "^7",
     "@rollup/plugin-node-resolve": "^6",
     "eslint": "^5",
+    "rimraf": "^3",
     "rollup": "^1.20",
     "rollup-plugin-babel": "^4",
     "rollup-plugin-terser": "^5"
