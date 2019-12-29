@@ -1,8 +1,8 @@
 {
   "name": "@activewidgets/options",
-  "version": "0.0.6",
-  "description": "activewidgets grid configuration options",
-  "author": "webmaster@activewidgets.com",
+  "version": "0.0.7",
+  "description": "ActiveWidgets grid configuration options",
+  "author": "ActiveWidgets SARL",
   "license": "MIT",
   "main": "./dist/options.js",
   "module": "./dist/esm/options.js",
@@ -18,9 +18,9 @@
     "test": "jest"
   },
   "devDependencies": {
-    "@activewidgets/datagrid": "https://cdn.activewidgets.com/packages/datagrid-0.0.6.tgz",
-    "@activewidgets/frameworks": "https://cdn.activewidgets.com/packages/frameworks-0.0.6.tgz",
-    "@activewidgets/testing": "^0.0.1",
+    "@activewidgets/datagrid": "0.0.7",
+    "@activewidgets/frameworks": "0.0.7",
+    "@activewidgets/testing": "0.0.1",
     "@babel/core": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
     "@rollup/plugin-node-resolve": "^6.0.0",
@@ -43,14 +43,15 @@
     }
   },
   "eslintIgnore": [
-    "dist"
+    "dist",
+    "*/unit.js"
   ],
   "jest": {
     "preset": "@activewidgets/testing",
     "moduleNameMapper": {
       "@activewidgets/components": "@activewidgets/datagrid",
       "@activewidgets/options": "<rootDir>/"
-     },
+    },
     "testMatch": [
       "<rootDir>/*/unit.js"
     ]
