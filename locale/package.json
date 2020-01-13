@@ -1,0 +1,6 @@
+{
+  "name": "@activewidgets/options/locale",
+  "main": "../dist/locale.js",
+  "module": "../dist/esm/locale.js",
+  "private": true
+}
