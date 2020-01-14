@@ -1,5 +1,6 @@
 
 export {default as column} from './column/index.js';
+export {default as convert} from './convert/index.js';
 export {default as csv} from './csv/index.js';
 export {default as format} from './format/index.js';
 export {default as html} from './html/index.js';

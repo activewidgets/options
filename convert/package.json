@@ -1,0 +1,6 @@
+{
+  "name": "@activewidgets/options/convert",
+  "main": "../dist/convert.js",
+  "module": "../dist/esm/convert.js",
+  "private": true
+}
