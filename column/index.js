@@ -1,17 +1,35 @@
 
 export default function(params){
-    return function({state}){
 
-        let {defaults} = state();
+    if (typeof params != 'object'){
+        throw new Error('incorrrect/missing arguments');
+    }
 
-        if (!defaults.column){
-            defaults.column = {};
-        }
 
-        let i, column = defaults.column;
-
-        for(i in params){
-            column[i] = params[i];
+    function applyStyle(target, source){
+        for (let i in source){
+            if (!(i in target)){
+                target[i] = source[i];
+            }
         }
     }
+
+
+    return function({on, cls}){
+
+        on('column', null, column => {
+
+            for (let i in params){
+                if (i == 'style'){
+                    applyStyle(column.style, params.style);
+                }
+                else if (i == cls && (cls in column)){
+                    column[cls] += ' ' + params[cls];
+                }
+                else if (!(i in column)){
+                    column[i] = params[i];
+                }
+            }
+        });
+    };
 }

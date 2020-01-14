@@ -9,7 +9,7 @@ test('present', () => {
 });
 
 
-xtest('width', () => {
+test('width', () => {
 
     let rows = [['cell']],
         options = [column({width: 222})];
@@ -17,5 +17,16 @@ xtest('width', () => {
     let {getByText} = render(Datagrid, {rows, options});
 
     expect(getByText('cell')).toHaveStyle('width: 222px');
+});
+
+
+test('applies format', () => {
+
+    let rows = [['cell']],
+        options = [column({format: v => v + v})],
+        result = render(Datagrid, {rows, options}),
+        cell = result.getByText('cellcell');
+
+    expect(cell).toBeInTheDocument();
 });
 
