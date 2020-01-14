@@ -1,0 +1,6 @@
+{
+  "name": "@activewidgets/options/intl",
+  "main": "../dist/intl.js",
+  "module": "../dist/esm/intl.js",
+  "private": true
+}
