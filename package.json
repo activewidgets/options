@@ -21,7 +21,7 @@
   "devDependencies": {
     "@activewidgets/datagrid": "0.0.9",
     "@activewidgets/frameworks": "0.0.9",
-    "@activewidgets/testing": "0.0.2",
+    "@activewidgets/testing": "0.0.3",
     "@babel/core": "^7",
     "@babel/preset-env": "^7",
     "@rollup/plugin-node-resolve": "^6",
