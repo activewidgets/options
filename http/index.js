@@ -4,15 +4,36 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-export default function(config){
+export default function(config = {}){
 
     return function({on, emit}){
 
+        function encodeParams(url, params = {}){
+
+            Object.keys(params).forEach(i => {
+                url += (url.indexOf('?') >= 0 ? '&' : '?') + i + '=' + encodeURIComponent(params[i]);
+            });
+
+            return url;
+        }
+
+
         function sendRequest(context){
+
             context.url = context.data;
             context.request = {};
+
+            Object.keys(config).forEach(i => {
+                context.request[i] = config[i];
+            });
+
             emit('request', context);
-            context.data = fetch(context.url, context.request);
+
+            let {data, url, params, request} = context;
+
+            if (typeof data === 'string'){
+                context.data = fetch(encodeParams(url, params), request);
+            }
         }
 
 
