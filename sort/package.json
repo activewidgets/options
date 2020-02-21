@@ -1,0 +1,6 @@
+{
+  "name": "@activewidgets/options/sort",
+  "main": "../dist/sort.js",
+  "module": "../dist/esm/sort.js",
+  "private": true
+}

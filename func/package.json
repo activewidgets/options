@@ -1,0 +1,6 @@
+{
+  "name": "@activewidgets/options/func",
+  "main": "../dist/func.js",
+  "module": "../dist/esm/func.js",
+  "private": true
+}
