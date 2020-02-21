@@ -4,50 +4,59 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-function request(url, params){
-    let headers = {accept: 'application/json'};
-    return {url, params, headers};
-}
-
-
-function send(req){
-    return fetch(req.url, req);
-}
-
-
-function plugin({state, update, emit}, config){
-
-    let {fetch, parse} = state(), methods = {};
-
-    methods.fetch = function(url, params, context){
-
-        if (typeof url != 'string'){
-            return fetch(url, params, context);
-        }
-
-        let req = request(url, params, config);
-
-        emit('fetch', req);
-
-        return send(req);
-    };
-
-
-    methods.parse = function(res, context){
-
-        if (!res || typeof res.json != 'function'){
-            return parse(res, context);
-        }
-
-        return res.json().then(v => parse(v, context));
-    };
-
-    update(methods);
-}
-
-
 export default function(config){
-    return function(api){
-        return plugin(api, config);
+
+    return function({on, emit}){
+
+        function sendRequest(context){
+            context.url = context.data;
+            context.request = {};
+            emit('request', context);
+            context.data = fetch(context.url, context.request);
+        }
+
+
+        function processResponse(context){
+
+            let {data: response} = context;
+
+            context.response = response;
+            emit('response', context);
+
+            if (context.data !== response){
+                return;
+            }
+            else if (!response.ok){
+                context.data = {error: response.statusText};
+            }
+            else if (String(response.headers.get('content-type')).indexOf('application/json') === 0){
+                context.data = response.json();
+            }
+            else {
+                context.data = response.text();
+            }
+        }
+
+
+        function parseText(context){
+            let {data} = context;
+            context.data = JSON.parse(data.value);
+        }
+
+
+        on('data', null, function(context){
+
+            let {data} = context;
+
+            if (typeof data == 'string'){
+                sendRequest(context);
+            }
+            else if (data && typeof data.json == 'function'){
+                processResponse(context);
+            }
+            else if (data && typeof data.value == 'string'){
+                parseText(context);
+            }
+        });
     };
 }
