@@ -4,31 +4,34 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-export default function(locale){
 
-    let number = Intl.NumberFormat,
-        datetime = Intl.DateTimeFormat;
+let number = Intl.NumberFormat,
+    datetime = Intl.DateTimeFormat;
 
-    let lookup = {
-        style: number,
-        currency: number,
-        useGrouping: number,
-        minimumIntegerDigits: number,
-        minimumFractionDigits: number,
-        maximumFractionDigits: number,
-        minimumSignificantDigits: number,
-        maximumSignificantDigits: number,
-        year: datetime,
-        month: datetime,
-        day: datetime,
-        weekday: datetime,
-        hour: datetime,
-        minute: datetime,
-        second: datetime
-    };
+let lookup = {
+    style: number,
+    currency: number,
+    useGrouping: number,
+    minimumIntegerDigits: number,
+    minimumFractionDigits: number,
+    maximumFractionDigits: number,
+    minimumSignificantDigits: number,
+    maximumSignificantDigits: number,
+    year: datetime,
+    month: datetime,
+    day: datetime,
+    weekday: datetime,
+    hour: datetime,
+    minute: datetime,
+    second: datetime
+};
 
 
-    function intl(column){
+function plugin({on, assign, configs}){
+
+    let {locale} = assign({}, ...configs);
+
+    on('column', null, function(column){
 
         let params = column.format;
 
@@ -49,10 +52,10 @@ export default function(locale){
         }
 
         column.format = format;
-    }
+    });
+}
 
 
-    return function({on}){
-        on('column', null, intl);
-    };
+export default function(locale){
+    return {plugin, config: {locale}};
 }

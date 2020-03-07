@@ -4,37 +4,28 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-export default function(params){
 
-    if (typeof params != 'object'){
-        throw new Error('incorrrect/missing arguments');
-    }
+function plugin({on, cls, assign, configs}){
 
+    let params = assign({}, ...configs);
 
-    function applyStyle(target, source){
-        for (let i in source){
-            if (!(i in target)){
-                target[i] = source[i];
+    on('column', null, col => {
+
+        for (let i in params){
+            if (i == 'style'){
+                col.style = assign({}, params.style, col.style);
+            }
+            else if (i == cls && (cls in col)){
+                col[cls] += ' ' + params[cls];
+            }
+            else if (!(i in col)){
+                col[i] = params[i];
             }
         }
-    }
+    });
+}
 
 
-    return function({on, cls}){
-
-        on('column', null, column => {
-
-            for (let i in params){
-                if (i == 'style'){
-                    applyStyle(column.style, params.style);
-                }
-                else if (i == cls && (cls in column)){
-                    column[cls] += ' ' + params[cls];
-                }
-                else if (!(i in column)){
-                    column[i] = params[i];
-                }
-            }
-        });
-    };
+export default function(config){
+    return {plugin, config};
 }

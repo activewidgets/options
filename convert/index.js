@@ -4,12 +4,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-export default function(name, fn){
-    return function({on}){
-        on('column', null, column => {
-            if (column.convert === name){
-                column.convert = fn;
-            }
-        });
-    };
+
+function plugin({on, configs}){
+    on('column', null, col => configs.forEach(([name, value]) => {
+        if (col.convert === name){
+            col.convert = value;
+        }
+    }));
+}
+
+
+export default function(...config){
+    return {plugin, config};
 }
