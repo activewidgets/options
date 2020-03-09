@@ -7,8 +7,8 @@
 
 function plugin({on, configs}){
     on('column', null, col => configs.forEach(([name, value]) => {
-        if (col.convert === name){
-            col.convert = value;
+        if (col.parse === name){
+            col.parse = value;
         }
     }));
 }

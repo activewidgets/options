@@ -1,18 +1,18 @@
 
-import {convert} from '@activewidgets/options';
+import {parse} from '@activewidgets/options';
 import {mount} from '@activewidgets/testing';
 
 
 test('present', () => {
-    expect(typeof convert).toBe('function');
+    expect(typeof parse).toBe('function');
 });
 
 
-test('convert fn', () => {
+test('parse fn', () => {
 
     let rows = [['cell']],
-        columns = [{convert: 'double', field: 0}],
-        options = [convert('double', v => v + v)],
+        columns = [{parse: 'double', field: 0}],
+        options = [parse('double', v => v + v)],
         result = mount('ax-datagrid', {columns, rows, options}),
         cell = result.getByText('cellcell');
 

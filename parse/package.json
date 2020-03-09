@@ -1,0 +1,6 @@
+{
+  "name": "@activewidgets/options/parse",
+  "main": "../dist/parse.js",
+  "module": "../dist/esm/parse.js",
+  "private": true
+}
