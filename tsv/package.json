@@ -1,6 +1,0 @@
-{
-  "name": "@activewidgets/options/tsv",
-  "main": "../dist/tsv.js",
-  "module": "../dist/esm/tsv.js",
-  "private": true
-}
