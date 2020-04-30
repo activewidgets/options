@@ -1,6 +1,6 @@
 {
   "name": "@activewidgets/options",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "ActiveWidgets grid configuration options",
   "author": "ActiveWidgets SARL",
   "license": "MIT",
@@ -20,8 +20,8 @@
     "test": "jest"
   },
   "devDependencies": {
-    "@activewidgets/datagrid": "3.0.2",
-    "@activewidgets/frameworks": "3.0.2",
+    "@activewidgets/datagrid": "3.0.3",
+    "@activewidgets/frameworks": "3.0.3",
     "@activewidgets/testing": "0.0.3",
     "@babel/core": "^7",
     "@babel/preset-env": "^7",
