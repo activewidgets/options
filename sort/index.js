@@ -5,7 +5,7 @@
  */
 
 
-function plugin({props, update, on, emit, watch, cls}){
+function plugin({props, update, on, emit, cls}){
 
     let {sorting = {items: []}} = props(),
         columns = {},
@@ -28,13 +28,18 @@ function plugin({props, update, on, emit, watch, cls}){
     }
 
 
-    watch('sorting', function(value){
+    function compute(current, previous){
+
+        if (current.sorting === previous.sorting){
+            return;
+        }
 
         sorted = {};
-        sorting = value;
-        composite = makeSortFn(value.items);
-        emit('reload');
-    });
+        sorting = current.sorting;
+        composite = makeSortFn(sorting.items);
+
+        return {rID: previous.rID + 1};
+    }
 
 
     function compare(v1, v2){
@@ -77,6 +82,8 @@ function plugin({props, update, on, emit, watch, cls}){
             update({sorting: sort(column)});
         }
     });
+
+    return {compute};
 }
 
 
