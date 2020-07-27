@@ -27,5 +27,5 @@ function plugin({on, cls, assign, configs}){
 
 
 export default function(config){
-    return {plugin, config};
+    return {plugin, config, priority: -10};
 }

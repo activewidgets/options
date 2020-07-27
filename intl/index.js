@@ -57,5 +57,5 @@ function plugin({on, assign, configs}){
 
 
 export default function(locale){
-    return {plugin, config: {locale}};
+    return {plugin, config: {locale}, priority: 100};
 }
