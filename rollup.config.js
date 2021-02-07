@@ -1,6 +1,6 @@
 
 import resolve from '@rollup/plugin-node-resolve';
-import babel from 'rollup-plugin-babel';
+import babel from '@rollup/plugin-babel';
 import {terser} from 'rollup-plugin-terser';
 import fs from 'fs';
 import path from 'path';
@@ -27,6 +27,7 @@ let plugins = [
     resolve(),
     babel({
         babelrc: false,
+        babelHelpers: 'bundled',
         exclude: 'node_modules/**',
         presets: [["@babel/env", {modules: false}]]
     }),
