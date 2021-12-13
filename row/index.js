@@ -7,21 +7,28 @@
 
 function plugin({on, cls, assign, configs}){
 
-    let params = assign({}, ...configs);
-
     on('row', null, row => {
+        configs.forEach(params => {
 
-        for (let i in params){
-            if (i == 'style'){
-                row.style = assign({}, params.style, row.style);
+            if (typeof params == 'function'){
+                params = params(row) || {};
             }
-            else if (i == cls && (cls in row)){
-                row[cls] += ' ' + params[cls];
+
+            for (let i in params){
+                if (i == 'cells'){
+                    row.cells = assign({}, params.cells, row.cells);
+                }
+                else if (i == 'style'){
+                    row.style = assign({}, params.style, row.style);
+                }
+                else if (i == cls && params[cls] && (cls in row)){
+                    row[cls] += ' ' + params[cls];
+                }
+                else if (!(i in row)){
+                    row[i] = params[i];
+                }
             }
-            else if (!(i in row)){
-                row[i] = params[i];
-            }
-        }
+        });
     });
 }
 
