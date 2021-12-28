@@ -5,7 +5,7 @@
  */
 
 
-function newItem(segment, i, seq){
+function newItem(segment, i){
 
     let offset = segment.offset + i,
         data = segment.page.items[offset],
@@ -18,18 +18,17 @@ function newItem(segment, i, seq){
     return {
         index: segment.index + i,
         pos,
-        seq,
         data,
         segment
     };
 }
 
 
-function itemsAfter(segment, count, offset, seq, items){
+function itemsAfter(segment, count, offset, items){
 
     for(let i=offset; i<segment.length; i++){
 
-        items.push(newItem(segment, i, seq));
+        items.push(newItem(segment, i));
 
         if (items.length >= count){
             return items;
@@ -37,18 +36,18 @@ function itemsAfter(segment, count, offset, seq, items){
     }
 
     if (segment.next && segment.next.start === segment.end){
-        return itemsAfter(segment.next, count, 0, seq, items);
+        return itemsAfter(segment.next, count, 0, items);
     }
 
     return items;
 }
 
 
-function itemsBefore(segment, count, offset, seq, items){
+function itemsBefore(segment, count, offset, items){
 
     for(let i=offset; i>=0; i--){
 
-        items.unshift(newItem(segment, i, seq));
+        items.unshift(newItem(segment, i));
 
         if (items.length >= count){
             return items;
@@ -56,14 +55,14 @@ function itemsBefore(segment, count, offset, seq, items){
     }
 
     if (segment.prev && segment.prev.end === segment.start){
-        return itemsBefore(segment.prev, count, segment.prev.length-1, seq, items);
+        return itemsBefore(segment.prev, count, segment.prev.length-1, items);
     }
 
     return items;
 }
 
 
-function findAfter(initial, count, offset, seq, pos, lead){
+function findAfter(initial, count, offset, pos, lead){
 
     let segment = initial;
 
@@ -84,18 +83,17 @@ function findAfter(initial, count, offset, seq, pos, lead){
 
     if (segment.start > initial.start || target > offset){
         offset = target;
-        seq = {};
     }
 
     if (offset >= segment.length && typeof pos == 'number' && segment.end < 1 && (!segment.next || segment.next.start !== segment.end)){
         cloneAfter(segment);
     }
 
-    return itemsAfter(segment, count, offset, seq, []);
+    return itemsAfter(segment, count, offset, []);
 }
 
 
-function findBefore(initial, count, offset, seq, pos, lead){
+function findBefore(initial, count, offset, pos, lead){
 
     let segment = initial;
 
@@ -116,14 +114,13 @@ function findBefore(initial, count, offset, seq, pos, lead){
 
     if (segment.end < initial.end || target < offset){
         offset = target;
-        seq = {};
     }
 
     if (offset < 0 && typeof pos == 'number' && segment.start > 0 && segment.prev.end !== segment.start){
         cloneBefore(segment);
     }
 
-    return itemsBefore(segment, count, offset, seq, []);
+    return itemsBefore(segment, count, offset, []);
 }
 
 
@@ -134,13 +131,11 @@ function getItems(segment, count, mode, item, pos){
     }
 
     let offset = -1,
-        seq = {},
         lead = 50;
 
     if (item){
         segment = item.segment;
         offset = item.index - segment.index;
-        seq = item.seq;
     }
 
     while (segment.replaced){
@@ -148,11 +143,11 @@ function getItems(segment, count, mode, item, pos){
     }
 
     if (mode === 'after'){
-        return findAfter(segment, count, offset + 1, seq, pos, lead);
+        return findAfter(segment, count, offset + 1, pos, lead);
     }
 
     if (mode === 'before'){
-        return findBefore(segment, count, offset - 1, seq, pos, lead);
+        return findBefore(segment, count, offset - 1, pos, lead);
     }
 }
 
