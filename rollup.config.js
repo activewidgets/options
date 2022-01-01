@@ -7,6 +7,11 @@ import path from 'path';
 import rootpkg from './package.json';
 
 
+let globals = {
+    '@activewidgets/experimental': 'ActiveWidgets.Experimental'
+};
+
+
 let getBanner = name => `/**
  * ${name} ${rootpkg.version}
  * Copyright (C) 2020 ActiveWidgets SARL. All Rights Reserved.
@@ -55,9 +60,10 @@ function expand({name, input}){
     return {
         input,
         output: [
-            {file: main, format: 'umd', sourcemap, banner, name, extend},
+            {file: main, format: 'umd', sourcemap, banner, globals, name, extend},
             {file: module, format: 'esm', sourcemap, banner}
         ],
+        external: Object.keys(globals),
         plugins
     };
 }

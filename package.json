@@ -19,7 +19,10 @@
     "prepack": "npm run build",
     "test": "jest"
   },
-  "devDependencies": {
+  "dependencies": {
+    "@activewidgets/experimental": "3.0.9"
+  },
+"devDependencies": {
     "@activewidgets/datagrid": "3.0.9",
     "@activewidgets/frameworks": "3.0.9",
     "@activewidgets/testing": "0.0.4",

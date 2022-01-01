@@ -1,6 +1,0 @@
-{
-  "name": "@activewidgets/options/lazy",
-  "main": "../dist/lazy.js",
-  "module": "../dist/esm/lazy.js",
-  "private": true
-}
