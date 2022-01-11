@@ -28,7 +28,7 @@ function plugin({props, update, on, emit, cls}){
     }
 
 
-    function compute(current, previous){
+    callbacks.compute.push((current, previous) => {
 
         if (current.sorting === previous.sorting){
             return;
@@ -39,7 +39,7 @@ function plugin({props, update, on, emit, cls}){
         composite = makeSortFn(sorting.items);
 
         return {rID: previous.rID + 1};
-    }
+    });
 
 
     function compare(v1, v2){
@@ -82,8 +82,6 @@ function plugin({props, update, on, emit, cls}){
             update({sorting: sort(column)});
         }
     });
-
-    return {compute};
 }
 
 
