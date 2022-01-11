@@ -14,9 +14,11 @@ function applyStyle(target, source){
 }
 
 
-function plugin({on, cls, configs}){
+function plugin({props, cls, configs}){
 
-    on('column', null, column => configs.forEach(([name, params]) => {
+    let {callbacks} = props();
+
+    callbacks.column.push(column => configs.forEach(([name, params]) => {
 
         if (column.type !== name){
             return;

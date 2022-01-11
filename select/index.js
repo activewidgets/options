@@ -4,16 +4,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-function plugin({on, emit, cls}){
+function plugin({props, on, emit, cls}){
 
-    let selected = 0;
+    let selected = 0, {callbacks} = props();
 
     on('mouse', function({row}){
         selected = row.index;
         emit('refresh', 'rows');
     });
 
-    on('row', function(row){
+    callbacks.row.push(function(row){
         if (row.index === selected){
             row[cls] = (row[cls] ? row[cls] + ' ' : '') + 'ax-selected';
         }

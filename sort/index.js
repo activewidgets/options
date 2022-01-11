@@ -7,7 +7,7 @@
 
 function plugin({props, update, on, emit, cls}){
 
-    let {sorting = {items: []}} = props(),
+    let {sorting = {items: []}, callbacks} = props(),
         columns = {},
         sorted = {},
         composite = () => 0;
@@ -52,7 +52,7 @@ function plugin({props, update, on, emit, cls}){
     });
 
 
-    on('column', function(col){
+    callbacks.column.push(function(col){
 
         col.compare = function(data1, data2){
             return compare(col.value(data1), col.value(data2));

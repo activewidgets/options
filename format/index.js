@@ -5,8 +5,11 @@
  */
 
 
-function plugin({on, configs}){
-    on('column', null, col => configs.forEach(([name, value]) => {
+function plugin({props, configs}){
+
+    let {callbacks} = props();
+
+    callbacks.column.push(col => configs.forEach(([name, value]) => {
         if (col.format === name){
             col.format = value;
         }

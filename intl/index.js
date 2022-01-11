@@ -27,11 +27,11 @@ let lookup = {
 };
 
 
-function plugin({on, assign, configs}){
+function plugin({props, assign, configs}){
 
-    let {locale} = assign({}, ...configs);
+    let {locale} = assign({}, ...configs), {callbacks} = props();
 
-    on('column', null, function(column){
+    callbacks.column.push(function(column){
 
         let params = column.format;
 

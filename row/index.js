@@ -5,9 +5,11 @@
  */
 
 
-function plugin({on, cls, assign, configs}){
+function plugin({props, cls, assign, configs}){
 
-    on('row', null, row => {
+    let {callbacks} = props();
+
+    callbacks.row.push(row => {
         configs.forEach(params => {
 
             if (typeof params == 'function'){
