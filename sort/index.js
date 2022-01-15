@@ -38,7 +38,7 @@ function plugin({props, update, on, emit, cls}){
         sorting = current.sorting;
         composite = makeSortFn(sorting.items);
 
-        return {rID: previous.rID + 1};
+        return {$recalc: {}};
     });
 
 
@@ -67,13 +67,14 @@ function plugin({props, update, on, emit, cls}){
     });
 
 
-    on('data', function(context){
-
-        let {target, data} = context;
-
-        if (target === 'rows' && sorting.items.length && data && Array.isArray(data)){
-            context.data = data.sort(composite);
+    callbacks.recalc.push(records => {
+        if (!Array.isArray(records) || !sorting.items.length){
+            return records;
         }
+
+        records = records.slice();
+        records.sort(composite);
+        return records;
     });
 
 
