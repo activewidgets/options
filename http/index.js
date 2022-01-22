@@ -4,80 +4,92 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import request from '../request/index.js';
+import response from '../response/index.js';
+import makeurl from '../url/index.js';
 
-function plugin({on, emit, assign, configs}){
 
+function plugin({props, include, assign, baseURL, fetchConfig}){
 
-    function encodeParams(url, params = {}){
+    let {api, callbacks, config} = props(),
+        noop = () => {};
 
-        Object.keys(params).forEach(i => {
-            url += (url.indexOf('?') >= 0 ? '&' : '?') + i + '=' + encodeURIComponent(params[i]);
-        });
+    include(request());
+    include(response());
+    include(makeurl());
 
-        return url;
+    if (baseURL){
+        config.baseURL = baseURL;
+    }
+
+    if (fetchConfig){
+        config.fetch = fetchConfig;
     }
 
 
-    function sendRequest(context){
+    function sendRequest(url, store, arg, cb1, cb2){
 
-        context.url = context.data;
-        context.request = assign({}, ...configs);
+        let {params} = props();
 
-        emit('request', context);
-
-        let {data, url, params, request} = context;
-
-        if (typeof data === 'string'){
-            context.data = fetch(encodeParams(url, params), request);
+        if (store !== api.rows){
+            params = {};
         }
+
+        if (arg){
+            params = assign({}, params, callbacks.params(arg));
+        }
+
+        url = callbacks.url(url, params);
+
+        return callbacks.request(url, config.fetch).then(res => processResponse(res, cb1, cb2));
     }
 
 
-    function processResponse(context){
+    function processResponse(res, cb1, cb2){
 
-        let {data: response} = context;
+        if (!res.ok){
+            throw new Error(res.statusText || res.status);
+        }
 
-        context.response = response;
-        emit('response', context);
+        return callbacks.response(res, cb1 || noop, cb2 || noop);
+    }
 
-        if (context.data !== response){
+
+    callbacks.load1.push((url, store) => {
+
+        if (typeof url != 'string'){
             return;
         }
-        else if (!response.ok){
-            context.data = {error: response.statusText};
+
+        if (!callbacks.params){
+            return () => sendRequest(url, store);
         }
-        else if (String(response.headers.get('content-type')).indexOf('application/json') === 0){
-            context.data = response.json();
+        
+        if (callbacks.response.length == 1){
+            return (params) => sendRequest(url, store, params || {});
         }
-        else {
-            context.data = response.text();
+
+        if (callbacks.response.length == 2){
+            return (params, cb1) => sendRequest(url, store, params || {}, cb1);
         }
-    }
 
-
-    function parseText(context){
-        let {data} = context;
-        context.data = JSON.parse(data.value);
-    }
-
-
-    on('data', null, function(context){
-
-        let {data} = context;
-
-        if (typeof data == 'string'){
-            sendRequest(context);
-        }
-        else if (data && typeof data.json == 'function'){
-            processResponse(context);
-        }
-        else if (data && typeof data.value == 'string'){
-            parseText(context);
+        if (callbacks.response.length == 3){
+            return (params, cb1, cb2) => sendRequest(url, store, params || {}, cb1, cb2);
         }
     });
 }
 
 
-export default function(config){
-    return {plugin, config};
+export default function(baseURL, fetchConfig){
+
+    if (typeof fetchConfig == 'undefined' && typeof baseURL == 'object'){
+        fetchConfig = baseURL;
+        baseURL = undefined;
+    }
+
+    if (baseURL && typeof URL != 'undefined' && typeof location != 'undefined') {
+        baseURL = new URL(baseURL, location.href);
+    }
+
+    return ({include}) => include(plugin, {baseURL, fetchConfig});
 }
