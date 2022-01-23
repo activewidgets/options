@@ -27,6 +27,17 @@ function plugin({props, include, assign, baseURL, fetchConfig}){
     }
 
 
+    function clean(params={}){
+        let result = {};
+        Object.keys(params).forEach(i => {
+            if (typeof params[i] != 'undefined'){
+                result[i] = params[i];
+            }
+        })
+        return result;
+    }
+
+
     function sendRequest(url, store, arg, cb1, cb2){
 
         let {params} = props();
@@ -39,7 +50,7 @@ function plugin({props, include, assign, baseURL, fetchConfig}){
             params = assign({}, params, callbacks.params(arg));
         }
 
-        url = callbacks.url(url, params);
+        url = callbacks.url(url, clean(params));
 
         return callbacks.request(url, config.fetch).then(res => processResponse(res, cb1, cb2));
     }
@@ -55,7 +66,7 @@ function plugin({props, include, assign, baseURL, fetchConfig}){
     }
 
 
-    callbacks.load1.push((url, store) => {
+    callbacks.props.push((url, store) => {
 
         if (typeof url != 'string'){
             return;
@@ -89,6 +100,7 @@ export default function(baseURL, fetchConfig){
 
     if (baseURL && typeof URL != 'undefined' && typeof location != 'undefined') {
         baseURL = new URL(baseURL, location.href);
+        baseURL.pathname += /\/$/.test(baseURL.pathname) ? '' : '/';
     }
 
     return ({include}) => include(plugin, {baseURL, fetchConfig});
