@@ -47,7 +47,7 @@ function read(filename){
 }
 
 
-function expand({name, input}){
+function config(name, input){
 
     let dir = path.dirname(input),
         pkg = JSON.parse(read(path.join(dir, 'package.json'))),
@@ -66,19 +66,6 @@ function expand({name, input}){
         external: Object.keys(globals),
         plugins
     };
-}
-
-
-function config(name, input){
-
-    let re = /default as (\w+).+'(.+)'/;
-
-    return read(input)
-        .split('\n')
-        .map(s => s.match(re) ? {name: name + '.' + RegExp.$1, input: RegExp.$2} : null)
-        .filter(x => !!x)
-        .concat({name, input})
-        .map(expand);
 }
 
 
