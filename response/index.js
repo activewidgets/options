@@ -6,18 +6,14 @@
 
 
  function plugin({props, fn}){
-
     let {callbacks} = props();
-
-    if (fn) {
-        callbacks.response = fn;
-    }
+    callbacks.response = fn;
 }
 
 
 export function response(fn){
 
-    if (fn && typeof fn != 'function'){
+    if (typeof fn != 'function'){
         throw new Error('function expected');
     }
 
