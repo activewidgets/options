@@ -1,6 +1,0 @@
-{
-  "name": "@activewidgets/options/response",
-  "main": "../dist/response.js",
-  "module": "../dist/esm/response.js",
-  "private": true
-}

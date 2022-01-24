@@ -1,6 +1,0 @@
-{
-  "name": "@activewidgets/options/params",
-  "main": "../dist/params.js",
-  "module": "../dist/esm/params.js",
-  "private": true
-}

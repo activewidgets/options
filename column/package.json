@@ -1,6 +1,0 @@
-{
-  "name": "@activewidgets/options/column",
-  "main": "../dist/column.js",
-  "module": "../dist/esm/column.js",
-  "private": true
-}

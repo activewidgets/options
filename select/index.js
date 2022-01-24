@@ -20,6 +20,6 @@ function plugin({props, on, emit, cls}){
     });
 }
 
-export default function(){
+export function select(){
     return {plugin};
 }

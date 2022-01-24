@@ -15,7 +15,7 @@
 }
 
 
-export default function(fn){
+export function response(fn){
 
     if (fn && typeof fn != 'function'){
         throw new Error('function expected');

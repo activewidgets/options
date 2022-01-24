@@ -56,6 +56,6 @@ function plugin({props, assign, configs}){
 }
 
 
-export default function(locale){
+export function intl(locale){
     return {plugin, config: {locale}, priority: 100};
 }

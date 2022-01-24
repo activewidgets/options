@@ -1,6 +1,0 @@
-{
-  "name": "@activewidgets/options/type",
-  "main": "../dist/type.js",
-  "module": "../dist/esm/type.js",
-  "private": true
-}

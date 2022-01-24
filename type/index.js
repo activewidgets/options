@@ -39,6 +39,6 @@ function plugin({props, cls, configs}){
 }
 
 
-export default function(...config){
+export function type(...config){
     return {plugin, config, priority: -100};
 }

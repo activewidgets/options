@@ -4,8 +4,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import makeurl from '../url/index.js';
-import getdata from '../data/index.js';
+import {url as makeurl} from '../url';
+import {data as getdata} from '../data';
 
 
 function plugin({props, include, assign, baseURL, fetchConfig}){
@@ -74,7 +74,7 @@ function plugin({props, include, assign, baseURL, fetchConfig}){
 }
 
 
-export default function(baseURL, fetchConfig){
+export function http(baseURL, fetchConfig){
 
     if (typeof fetchConfig == 'undefined' && typeof baseURL == 'object'){
         fetchConfig = baseURL;

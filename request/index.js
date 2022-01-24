@@ -15,7 +15,7 @@ function plugin({props, fn}){
 }
 
 
-export default function(fn){
+export function request(fn){
 
     if (fn && typeof fn != 'function'){
         throw new Error('function expected');

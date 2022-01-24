@@ -26,7 +26,7 @@
 }
 
 
-export default function(fn){
+export function url(fn){
 
     if (fn && typeof fn != 'function'){
         throw new Error('callback function expected');

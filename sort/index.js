@@ -89,6 +89,6 @@ function plugin({props, update, on, emit, cls}){
 }
 
 
-export default function(){
+export function sort(){
     return plugin;
 }

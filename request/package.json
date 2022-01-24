@@ -1,6 +1,0 @@
-{
-  "name": "@activewidgets/options/request",
-  "main": "../dist/request.js",
-  "module": "../dist/esm/request.js",
-  "private": true
-}

@@ -17,6 +17,6 @@ function plugin({props, configs}){
 }
 
 
-export default function(...config){
+export function format(...config){
     return {plugin, config};
 }

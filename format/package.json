@@ -1,6 +1,0 @@
-{
-  "name": "@activewidgets/options/format",
-  "main": "../dist/format.js",
-  "module": "../dist/esm/format.js",
-  "private": true
-}

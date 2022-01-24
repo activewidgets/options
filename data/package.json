@@ -1,6 +1,0 @@
-{
-  "name": "@activewidgets/options/data",
-  "main": "../dist/data.js",
-  "module": "../dist/esm/data.js",
-  "private": true
-}

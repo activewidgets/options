@@ -24,7 +24,7 @@ function plugin({props, assign, config}){
 }
 
 
-export default function(config){
+export function params(config){
 
     if (config && typeof config != 'function'){
         throw new Error('function expected');
