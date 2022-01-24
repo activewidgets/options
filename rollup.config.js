@@ -14,7 +14,7 @@ let globals = {
 
 let getBanner = name => `/**
  * ${name} ${rootpkg.version}
- * Copyright (C) 2020 ActiveWidgets SARL. All Rights Reserved.
+ * Copyright (C) 2022 ActiveWidgets SARL. All Rights Reserved.
  * This code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this package.
  */
@@ -23,7 +23,7 @@ let getBanner = name => `/**
 
 function keepBanner(node, comment){
     if (comment.type == "comment2") {
-        return /2020 ActiveWidgets/.test(comment.value);
+        return /2022 ActiveWidgets/.test(comment.value);
     }
 }
 
