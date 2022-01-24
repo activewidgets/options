@@ -10,7 +10,10 @@
     let {callbacks} = props();
 
     if (fn) {
-        callbacks.response = fn;
+        callbacks.data = fn;
+    }
+    else if(!callbacks.data){
+        callbacks.data = obj => obj;
     }
 }
 
@@ -18,7 +21,7 @@
 export default function(fn){
 
     if (fn && typeof fn != 'function'){
-        throw new Error('function expected');
+        throw new Error('callback function expected');
     }
 
     return ({include}) => include(plugin, {fn});

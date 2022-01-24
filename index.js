@@ -1,5 +1,6 @@
 
 export {default as column} from './column/index.js';
+export {default as data} from './data/index.js';
 export {default as format} from './format/index.js';
 export {default as http} from './http/index.js';
 export {default as intl} from './intl/index.js';

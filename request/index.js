@@ -12,9 +12,6 @@ function plugin({props, fn}){
     if (fn) {
         callbacks.request = fn;
     }
-    else if(!callbacks.request){
-        callbacks.request = (url, cfg) => fetch(url, cfg);
-    }
 }
 
 

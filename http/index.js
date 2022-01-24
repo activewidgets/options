@@ -4,9 +4,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import request from '../request/index.js';
-import response from '../response/index.js';
 import makeurl from '../url/index.js';
+import getdata from '../data/index.js';
 
 
 function plugin({props, include, assign, baseURL, fetchConfig}){
@@ -14,9 +13,8 @@ function plugin({props, include, assign, baseURL, fetchConfig}){
     let {api, callbacks, config} = props(),
         noop = () => {};
 
-    include(request());
-    include(response());
     include(makeurl());
+    include(getdata());
 
     if (baseURL){
         config.baseURL = baseURL;
@@ -38,7 +36,7 @@ function plugin({props, include, assign, baseURL, fetchConfig}){
     }
 
 
-    function sendRequest(url, store, arg, cb1, cb2){
+    function sendRequest(url, store, arg, cb){
 
         let {params} = props();
 
@@ -52,17 +50,12 @@ function plugin({props, include, assign, baseURL, fetchConfig}){
 
         url = callbacks.url(url, clean(params));
 
-        return callbacks.request(url, config.fetch).then(res => processResponse(res, cb1, cb2));
+        return callbacks.request(url, config.fetch).then(res => processResponse(res, cb));
     }
 
 
-    function processResponse(res, cb1, cb2){
-
-        if (!res.ok){
-            throw new Error(res.statusText || res.status);
-        }
-
-        return callbacks.response(res, cb1 || noop, cb2 || noop);
+    function processResponse(res, cb){
+        return Promise.resolve(res).then(callbacks.response).then(data => callbacks.data(data, cb || noop));
     }
 
 
@@ -76,17 +69,7 @@ function plugin({props, include, assign, baseURL, fetchConfig}){
             return () => sendRequest(url, store);
         }
         
-        if (callbacks.response.length == 1){
-            return (params) => sendRequest(url, store, params || {});
-        }
-
-        if (callbacks.response.length == 2){
-            return (params, cb1) => sendRequest(url, store, params || {}, cb1);
-        }
-
-        if (callbacks.response.length == 3){
-            return (params, cb1, cb2) => sendRequest(url, store, params || {}, cb1, cb2);
-        }
+        return (params, cb) => sendRequest(url, store, params || {}, cb);
     });
 }
 
