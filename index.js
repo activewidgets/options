@@ -10,7 +10,6 @@ export * from './request';
 export * from './response';
 export * from './row';
 export * from './select';
-export * from './sort';
 export * from './type';
 export * from './url';
 
