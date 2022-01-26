@@ -59,7 +59,7 @@ function plugin({props, include, assign, baseURL, fetchConfig}){
     }
 
 
-    callbacks.props.push((url, store) => {
+    callbacks.inputs.unshift((url, store) => {
 
         if (typeof url != 'string'){
             return;
