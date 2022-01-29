@@ -4,7 +4,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {url as makeurl} from '../url';
 import {data as getdata} from '../data';
 
 
@@ -12,7 +11,6 @@ function plugin({props, include, assign, baseURL, fetchConfig}){
 
     let {api, callbacks, config} = props();
 
-    include(makeurl());
     include(getdata());
 
     if (baseURL){
@@ -23,52 +21,73 @@ function plugin({props, include, assign, baseURL, fetchConfig}){
         config.fetch = fetchConfig;
     }
 
+    if (config.http){
+        return; // run once
+    }
 
-    function clean(params={}){
-        let result = {};
-        Object.keys(params).forEach(i => {
-            if (typeof params[i] != 'undefined'){
-                result[i] = params[i];
+    config.http = true;
+
+
+    function send(path, cfg){
+
+        let url = new URL(path, config.baseURL || location.href),
+            headers = assign({}, config.fetch && config.fetch.headers, cfg && cfg.headers),
+            fetchConfig = assign({}, config.fetch, cfg, {headers});
+
+        if (!headers['Accept']){
+            headers['Accept'] = 'application/json; text/plain; */*';
+        }
+        
+        if (fetchConfig.body && !headers['Content-Type']){
+            headers['Content-Type'] = 'application/json';
+        }
+
+        return Promise.resolve().then(() => callbacks.request(url, fetchConfig)).then(callbacks.response);            
+    }
+
+
+    function convertParams(params){
+
+        let obj = callbacks.params(params),
+            result = {};
+
+        Object.keys(obj).forEach(i => {
+            if (typeof obj[i] != 'undefined'){
+                result[i] = obj[i];
             }
         })
+    
         return result;
     }
 
 
-    function sendRequest(url, store, arg){
-
-        let {params} = props();
-
-        if (store !== api.rows){
-            params = {};
-        }
-
-        if (arg){
-            params = assign({}, params, callbacks.params(arg));
-        }
-
-        url = callbacks.url(url, clean(params));
-
-        return callbacks.request(url, config.fetch).then(processResponse);
+    function convertData(data){
+        return callbacks.data(data);
     }
 
 
-    function processResponse(res){
-        return Promise.resolve(res).then(callbacks.response).then(callbacks.data);
+    function defaultOperation(path){
+
+        if (!callbacks.params){
+            return () => send(path).then(convertData);
+        }
+
+        return params => send(`${path}?${new URLSearchParams(convertParams(params))}`).then(convertData);
     }
 
 
-    callbacks.inputs.unshift((url, store) => {
+    callbacks.inputs.unshift((path, store) => {
 
-        if (typeof url != 'string'){
+        if (typeof path != 'string'){
             return;
         }
 
-        if (!callbacks.params){
-            return () => sendRequest(url, store);
+        if (store !== api.rows || !callbacks.httpops){
+            return defaultOperation(path);
         }
-        
-        return (params) => sendRequest(url, store, params || {});
+
+        let ops = callbacks.httpops.map(fn => fn(path, send, convertParams, convertData));
+        return assign({getRows: defaultOperation(path)}, ...ops);
     });
 }
 

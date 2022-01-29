@@ -6,12 +6,18 @@
 
 
 function plugin({props, fn}){
+    
     let {callbacks} = props();
-    callbacks.response = fn;
+    
+    if (!callbacks.httpops){
+        callbacks.httpops = [];
+    }
+
+    callbacks.httpops.push(fn);
 }
 
 
-export function response(fn){
+export function operations(fn){
 
     if (typeof fn != 'function'){
         throw new Error('function expected');
