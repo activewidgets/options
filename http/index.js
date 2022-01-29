@@ -4,14 +4,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {data as getdata} from '../data';
 
-
-function plugin({props, include, assign, baseURL, fetchConfig}){
+function plugin({props, assign, baseURL, fetchConfig}){
 
     let {api, callbacks, config} = props();
-
-    include(getdata());
 
     if (baseURL){
         config.baseURL = baseURL;
@@ -48,7 +44,7 @@ function plugin({props, include, assign, baseURL, fetchConfig}){
 
     function convertParams(params){
 
-        let obj = callbacks.params(params),
+        let obj = assign(...callbacks.params.map(fn => fn(params))),
             result = {};
 
         Object.keys(obj).forEach(i => {
@@ -62,7 +58,18 @@ function plugin({props, include, assign, baseURL, fetchConfig}){
 
 
     function convertData(data){
-        return callbacks.data(data);
+
+        if (callbacks.data){
+            let i, result, len = callbacks.data.length;
+            for(i=0; i<len; i++){
+                result = callbacks.data[i](data);
+                if (typeof result != 'undefined'){
+                    return result;
+                }
+            }
+        }
+
+        return data;
     }
 
 

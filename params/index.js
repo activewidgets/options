@@ -5,30 +5,23 @@
  */
 
 
-function plugin({props, assign, config}){
+function plugin({props, fn}){
 
     let {callbacks} = props();
 
-
-    function params(input){
-        return assign({}, input);
+    if(!callbacks.params){
+        callbacks.params = [];
     }
 
-
-    if (config) {
-        callbacks.params = config;
-    }
-    else if(!callbacks.params){
-        callbacks.params = params;
-    }
+    callbacks.params.push(fn);
 }
 
 
-export function params(config){
+export function params(fn){
 
-    if (config && typeof config != 'function'){
+    if (typeof fn != 'function'){
         throw new Error('function expected');
     }
 
-    return ({include}) => include(plugin, {config});
+    return ({include}) => include(plugin, {fn});
 }
