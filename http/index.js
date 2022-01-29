@@ -10,8 +10,7 @@ import {data as getdata} from '../data';
 
 function plugin({props, include, assign, baseURL, fetchConfig}){
 
-    let {api, callbacks, config} = props(),
-        noop = () => {};
+    let {api, callbacks, config} = props();
 
     include(makeurl());
     include(getdata());
@@ -36,7 +35,7 @@ function plugin({props, include, assign, baseURL, fetchConfig}){
     }
 
 
-    function sendRequest(url, store, arg, cb){
+    function sendRequest(url, store, arg){
 
         let {params} = props();
 
@@ -50,12 +49,12 @@ function plugin({props, include, assign, baseURL, fetchConfig}){
 
         url = callbacks.url(url, clean(params));
 
-        return callbacks.request(url, config.fetch).then(res => processResponse(res, cb));
+        return callbacks.request(url, config.fetch).then(processResponse);
     }
 
 
-    function processResponse(res, cb){
-        return Promise.resolve(res).then(callbacks.response).then(data => callbacks.data(data, cb || noop));
+    function processResponse(res){
+        return Promise.resolve(res).then(callbacks.response).then(callbacks.data);
     }
 
 
@@ -69,7 +68,7 @@ function plugin({props, include, assign, baseURL, fetchConfig}){
             return () => sendRequest(url, store);
         }
         
-        return (params, cb) => sendRequest(url, store, params || {}, cb);
+        return (params) => sendRequest(url, store, params || {});
     });
 }
 
