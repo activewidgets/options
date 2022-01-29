@@ -5,7 +5,7 @@
  */
 
 
-function plugin({props, assign, baseURL, fetchConfig}){
+function plugin({props, assign}, baseURL, fetchConfig){
 
     let {api, callbacks, config} = props();
 
@@ -111,5 +111,5 @@ export function http(baseURL, fetchConfig){
         baseURL.pathname += /\/$/.test(baseURL.pathname) ? '' : '/';
     }
 
-    return ({include}) => include(plugin, {baseURL, fetchConfig});
+    return comp => plugin(comp, baseURL, fetchConfig);
 }

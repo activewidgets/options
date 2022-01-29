@@ -5,7 +5,7 @@
  */
 
 
-function plugin({props, fn}){
+function plugin({props}, fn){
     let {callbacks} = props();
     callbacks.response = fn;
 }
@@ -17,5 +17,5 @@ export function response(fn){
         throw new Error('function expected');
     }
 
-    return ({include}) => include(plugin, {fn});
+    return comp => plugin(comp, fn);
 }
