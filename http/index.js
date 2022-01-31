@@ -93,7 +93,9 @@ function plugin({props, assign}, baseURL, fetchConfig){
             return defaultOperation(path);
         }
 
-        let ops = callbacks.httpops.map(fn => fn(path, send, convertParams, convertData));
+        let {identity} = props(),
+            ops = callbacks.httpops.map(fn => fn(path, send, identity, convertParams, convertData));
+
         return assign({getRows: defaultOperation(path)}, ...ops);
     });
 }
