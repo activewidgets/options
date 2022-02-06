@@ -8,8 +8,6 @@
   "module": "./dist/esm/options.js",
   "files": [
     "dist",
-    "*/package.json",
-    "*/unit.js",
     "LICENSE",
     "README.md"
   ],
