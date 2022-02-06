@@ -5,6 +5,8 @@
  */
 
 
+import {format} from '../format';
+
 let number = Intl.NumberFormat,
     datetime = Intl.DateTimeFormat;
 
@@ -27,35 +29,23 @@ let lookup = {
 };
 
 
-function plugin({props, assign, configs}){
+export function intl(locale){
+    return format(pattern => {
 
-    let {locale} = assign({}, ...configs), {callbacks} = props();
-
-    callbacks.column.push(function(column){
-
-        let params = column.format;
-
-        if (typeof params != 'object'){
+        if (typeof pattern != 'object'){
             return;
         }
 
-        let Type = Object.keys(params).reduce((result, key) => result || lookup[key], null);
+        let Type = Object.keys(pattern).reduce((result, key) => result || lookup[key], null);
 
         if (!Type){
             return;
         }
 
-        let instance = new Type(locale, params);
+        let instance = new Type(locale, pattern);
 
-        function format(value){
+        return function(value){
             try { return instance.format(value)} catch(err){ return value }
         }
-
-        column.format = format;
     });
-}
-
-
-export function intl(locale){
-    return {plugin, config: {locale}, priority: 100};
 }
