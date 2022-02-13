@@ -19,20 +19,20 @@ function plugin({props}, name, value, fn){
 
         let pattern = col.format;
 
-        col.format = noop;
+        col.callbacks.format = noop;
 
         if (typeof pattern == 'string' && pattern in config.formats){
             pattern = config.formats[pattern];
         }
 
         if (typeof pattern == 'function'){
-            col.format = pattern;
+            col.callbacks.format = pattern;
         }
         else if (pattern){
             for(let i=0; i<callbacks.formats.length; i++){
                 let formatFn = callbacks.formats[i](pattern);
                 if (formatFn){
-                    col.format = formatFn;
+                    col.callbacks.format = formatFn;
                     return;
                 }
             }

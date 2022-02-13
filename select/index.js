@@ -4,13 +4,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-function plugin({props, on, emit, cls}){
+function plugin({props, update, on, cls}){
 
     let selected = 0, {callbacks} = props();
 
     on('mouse', function({row}){
         selected = row.index;
-        emit('refresh', 'rows');
+        update({$rows: {}});
     });
 
     callbacks.row.push(function(row){
@@ -21,5 +21,5 @@ function plugin({props, on, emit, cls}){
 }
 
 export function select(){
-    return {plugin};
+    return plugin;
 }
