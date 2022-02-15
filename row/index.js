@@ -5,32 +5,12 @@
  */
 
 
-function plugin({props, cls, assign, configs}){
+function plugin({props, configs}){
 
     let {callbacks} = props();
 
-    callbacks.row.push(row => {
-        configs.forEach(params => {
-
-            if (typeof params == 'function'){
-                params = params(row) || {};
-            }
-
-            for (let i in params){
-                if (i == 'cells'){
-                    row.cells = assign({}, params.cells, row.cells);
-                }
-                else if (i == 'style'){
-                    row.style = assign({}, params.style, row.style);
-                }
-                else if (i == cls && params[cls] && (cls in row)){
-                    row[cls] += ' ' + params[cls];
-                }
-                else if (!(i in row)){
-                    row[i] = params[i];
-                }
-            }
-        });
+    configs.forEach(params => {
+        callbacks.row.push(typeof params == 'function' ? params : () => params);
     });
 }
 
