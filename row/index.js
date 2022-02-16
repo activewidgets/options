@@ -5,16 +5,19 @@
  */
 
 
-function plugin({props, configs}){
+function plugin({props}, config){
 
     let {callbacks} = props();
 
-    configs.forEach(params => {
-        callbacks.row.push(typeof params == 'function' ? params : () => params);
-    });
+    if (typeof config == 'function'){
+        callbacks.row.push(config);    
+    }
+    else {
+        callbacks.row.push(() => config);
+    }
 }
 
 
 export function row(config){
-    return {plugin, config, priority: -10};
+    return comp => plugin(comp, config);
 }

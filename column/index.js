@@ -5,33 +5,19 @@
  */
 
 
-function plugin({props, cls, assign, configs}){
+function plugin({props}, config){
 
     let {callbacks} = props();
 
-    callbacks.column.push(col => {
-        configs.forEach(params => {
-
-            if (typeof params == 'function'){
-                params = params(col) || {};
-            }
-
-            for (let i in params){
-                if (i == 'style'){
-                    col.style = assign({}, params.style, col.style);
-                }
-                else if (i == cls && (cls in col)){
-                    col[cls] += ' ' + params[cls];
-                }
-                else if (!(i in col)){
-                    col[i] = params[i];
-                }
-            }
-        });    
-    });
+    if (typeof config == 'function'){
+        callbacks.column.push(config);
+    }
+    else {
+        callbacks.beforeColumn.unshift(() => config);
+    }
 }
 
 
 export function column(config){
-    return {plugin, config, priority: -10};
+    return comp => plugin(comp, config);
 }

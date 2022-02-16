@@ -5,11 +5,6 @@
  */
 
 
- function noop(value){
-    return value;
-}
-
-
 function plugin({props}, name, value, fn){
 
     let {callbacks, config} = props();
@@ -19,32 +14,33 @@ function plugin({props}, name, value, fn){
 
         let pattern = col.format;
 
-        col.callbacks.format = noop;
-
+        if (!pattern){
+            return;
+        }
+    
         if (typeof pattern == 'string' && pattern in config.formats){
             pattern = config.formats[pattern];
         }
 
         if (typeof pattern == 'function'){
-            col.callbacks.format = pattern;
+            return {fn: {text: pattern}};
         }
-        else if (pattern){
-            for(let i=0; i<callbacks.formats.length; i++){
-                let formatFn = callbacks.formats[i](pattern);
-                if (formatFn){
-                    col.callbacks.format = formatFn;
-                    return;
-                }
+
+        for(let i=0; i<callbacks.formats.length; i++){
+            let func = callbacks.formats[i](pattern);
+            if (func){
+                return {fn: {text: func}};
             }
-            throw new Error('unknown format pattern - ' + pattern);
         }
+
+        throw new Error('unknown format pattern - ' + pattern);
     }
 
 
     if (!config.formats){
         config.formats = {};
         callbacks.formats = [];
-        callbacks.column.push(processFormat);
+        callbacks.afterColumn.push(processFormat);
     }
 
     if (fn){

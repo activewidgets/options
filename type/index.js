@@ -5,40 +5,18 @@
  */
 
 
-function applyStyle(target, source){
-    for (let i in source){
-        if (!(i in target)){
-            target[i] = source[i];
-        }
-    }
-}
-
-
-function plugin({props, cls, configs}){
+function plugin({props}, name, params){
 
     let {callbacks} = props();
 
-    callbacks.column.push(column => configs.forEach(([name, params]) => {
-
-        if (column.type !== name){
-            return;
+    callbacks.beforeColumn.push((column) => {
+        if (column.type === name){
+            return params;
         }
-
-        for (let i in params){
-            if (i == 'style'){
-                applyStyle(column.style, params.style);
-            }
-            else if (i == cls && (cls in column)){
-                column[cls] += ' ' + params[cls];
-            }
-            else if (!(i in column)){
-                column[i] = params[i];
-            }
-        }
-    }));
+    });    
 }
 
 
-export function type(...config){
-    return {plugin, config, priority: -100};
+export function type(name, params){
+    return comp => plugin(comp, name, params);
 }

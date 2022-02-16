@@ -11,21 +11,21 @@ test('present', () => {
 test('width', () => {
 
     let rows = [['cell']],
-        options = [column({width: 222})];
+        options = [column({width: 222})],
+        result = mount('ax-datagrid', {rows, options}),
+        cell = result.getByText('cell');
 
-    let {getByText} = mount('ax-datagrid', {rows, options});
-
-    expect(getByText('cell')).toHaveStyle('width: 222px');
+    expect(cell).toHaveStyle('width: 222px');
 });
 
 
-test('applies format', () => {
+test('align', () => {
 
     let rows = [['cell']],
-        options = [column({format: v => v + v})],
+        options = [column({align: 'right'})],
         result = mount('ax-datagrid', {rows, options}),
-        cell = result.getByText('cellcell');
+        cell = result.getByText('cell');
 
-    expect(cell).toBeInTheDocument();
+    expect(cell).toHaveClass('ax-align-right');
 });
 
