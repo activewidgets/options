@@ -6,16 +6,19 @@
 
 function plugin({props, update, on, cls}){
 
-    let selected = 0, {callbacks} = props();
+    let selected = 0, {api, callbacks} = props();
 
-    on('mouse', function({row}){
-        selected = row.index;
-        update({$rows: {}});
+    on('click', function({target}){
+        let cell = api.cellFromElement(target);
+        if (cell && cell.section === 'main'){
+            selected = cell.row.index;
+            update({$rows: {}});
+        }
     });
 
-    callbacks.row.push(function(row){
-        if (row.index === selected){
-            row[cls] = (row[cls] ? row[cls] + ' ' : '') + 'ax-selected';
+    callbacks.row.push(function(data, id, index){
+        if (index === selected){
+            return {[cls]: 'ax-selected'};
         }
     });
 }
