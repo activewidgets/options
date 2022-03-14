@@ -8,7 +8,7 @@ test('present', () => {
 });
 
 
-test('format fn', () => {
+test('number', () => {
 
     let rows = [[1234]],
         columns = [{format: {style: 'decimal', minimumFractionDigits: 2}, field: 0}],
@@ -19,3 +19,50 @@ test('format fn', () => {
     expect(cell).toBeInTheDocument();
 });
 
+
+test('date string', () => {
+
+    let rows = [['2021-12-21']],
+        columns = [{format: {year: 'numeric', month: 'short', day: 'numeric'}, field: 0}],
+        options = [intl('en-US')],
+        result = mount('ax-datagrid', {columns, rows, options}),
+        cell = result.getByText('Dec 21, 2021');
+
+    expect(cell).toBeInTheDocument();
+});
+
+
+test('date object', () => {
+
+    let rows = [[new Date('2021-12-21')]],
+        columns = [{format: {year: 'numeric', month: 'short', day: 'numeric'}, field: 0}],
+        options = [intl('en-US')],
+        result = mount('ax-datagrid', {columns, rows, options}),
+        cell = result.getByText('Dec 21, 2021');
+
+    expect(cell).toBeInTheDocument();
+});
+
+
+test('date num', () => {
+
+    let rows = [[Date.parse('2021-12-21')]],
+        columns = [{format: {year: 'numeric', month: 'short', day: 'numeric'}, field: 0}],
+        options = [intl('en-US')],
+        result = mount('ax-datagrid', {columns, rows, options}),
+        cell = result.getByText('Dec 21, 2021');
+
+    expect(cell).toBeInTheDocument();
+});
+
+
+test('date fallback', () => {
+
+    let rows = [['x2021']],
+        columns = [{format: {year: 'numeric', month: 'short', day: 'numeric'}, field: 0}],
+        options = [intl('en-US')],
+        result = mount('ax-datagrid', {columns, rows, options}),
+        cell = result.getByText('x2021');
+
+    expect(cell).toBeInTheDocument();
+});

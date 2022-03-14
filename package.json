@@ -59,7 +59,7 @@
     "preset": "@activewidgets/testing",
     "moduleNameMapper": {
       "@activewidgets/components": "@activewidgets/datagrid",
-      "@activewidgets/options": "<rootDir>/"
+      "@activewidgets/options": "<rootDir>/index.js"
     },
     "testMatch": [
       "<rootDir>/*/unit.js"

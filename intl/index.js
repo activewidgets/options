@@ -42,10 +42,20 @@ export function intl(locale){
             return;
         }
 
-        let instance = new Type(locale, pattern);
+        let instance = new Type(locale, pattern),
+            parse = v => v;
+
+        if (Type === Intl.DateTimeFormat){
+            parse = v => (typeof v == 'number') ? v : Date.parse(v);
+        }
 
         return function(value){
-            try { return instance.format(value)} catch(err){ return value }
+            try {
+                return instance.format(parse(value));
+            } 
+            catch(err){ 
+                return value;
+            }
         }
     });
 }
