@@ -11,7 +11,11 @@ function plugin({props}, fn){
 }
 
 
-export function cell(fn){
+/**
+ * @param {(value?: any, data?: any, column?: any, row?: any) => any} fn 
+ * @returns {any}
+ */
+ export function cell(fn){
 
     if (typeof fn != 'function'){
         throw new Error('function expected');

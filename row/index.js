@@ -17,7 +17,10 @@ function plugin({props}, config){
     }
 }
 
-
+/**
+ * @param {(data?: any) => any | any} config
+ * @returns {any}
+ */
 export function row(config){
     return comp => plugin(comp, config);
 }
