@@ -24,56 +24,64 @@ function plugin({props, assign}, baseURL, fetchConfig){
     config.http = true;
 
 
-    function send(path, cfg){
+    function defineOperation(path, fn){
 
-        let url = new URL(path, config.baseURL || location.href),
-            headers = assign({}, config.fetch && config.fetch.headers, cfg && cfg.headers),
-            fetchConfig = assign({}, config.fetch, cfg, {headers});
+        let {identity} = props(),
+            info;
 
-        if (!headers['Accept']){
-            headers['Accept'] = 'application/json; text/plain; */*';
-        }
-        
-        if (fetchConfig.body && !headers['Content-Type']){
-            headers['Content-Type'] = 'application/json';
-        }
+        function send(path, cfg){
 
-        return Promise.resolve().then(() => callbacks.request(url, fetchConfig)).then(callbacks.response);            
-    }
+            let url = new URL(path, config.baseURL || location.href),
+                headers = assign({}, config.fetch && config.fetch.headers, cfg && cfg.headers),
+                fetchConfig = assign({}, config.fetch, cfg, {headers});
 
-
-    function convertParams(params){
-
-        let obj = assign(...callbacks.params.map(fn => fn(params))),
-            result = {};
-
-        Object.keys(obj).forEach(i => {
-            if (typeof obj[i] != 'undefined'){
-                result[i] = obj[i];
+            if (!headers['Accept']){
+                headers['Accept'] = 'application/json; text/plain; */*';
             }
-        })
-    
-        return result;
-    }
+            
+            if (fetchConfig.body && !headers['Content-Type']){
+                headers['Content-Type'] = 'application/json';
+            }
+
+            return Promise.resolve()
+                .then(() => callbacks.request(url, fetchConfig))
+                .then(res => (info = res, callbacks.response(res)));            
+        }
 
 
-    function convertData(data){
+        function convertParams(params){
 
-        if (callbacks.data){
-            let i, result, len = callbacks.data.length;
-            for(i=0; i<len; i++){
-                result = callbacks.data[i](data);
-                if (typeof result != 'undefined'){
-                    return result;
+            let obj = assign(...callbacks.params.map(fn => fn(params))),
+                result = {};
+
+            Object.keys(obj).forEach(i => {
+                if (typeof obj[i] != 'undefined'){
+                    result[i] = obj[i];
+                }
+            })
+        
+            return result;
+        }
+
+
+        function convertData(data){
+
+            if (callbacks.data){
+                let i, result, len = callbacks.data.length;
+                for(i=0; i<len; i++){
+                    result = callbacks.data[i](data, info);
+                    if (typeof result != 'undefined'){
+                        return result;
+                    }
                 }
             }
+
+            return data;
         }
 
-        return data;
-    }
-
-
-    function defaultOperation(path){
+        if (fn){
+            return fn(path, send, identity, convertParams, convertData);
+        }
 
         if (!callbacks.params){
             return () => send(path).then(convertData);
@@ -90,13 +98,12 @@ function plugin({props, assign}, baseURL, fetchConfig){
         }
 
         if (store !== api.rows || !callbacks.httpops){
-            return defaultOperation(path);
+            return defineOperation(path);
         }
 
-        let {identity} = props(),
-            ops = callbacks.httpops.map(fn => fn(path, send, identity, convertParams, convertData));
+        let ops = callbacks.httpops.map(fn => defineOperation(path, fn));
 
-        return assign({getRows: defaultOperation(path)}, ...ops);
+        return assign({getRows: defineOperation(path)}, ...ops);
     });
 }
 
