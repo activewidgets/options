@@ -16,7 +16,7 @@
     "build": "npm run lint && rimraf dist/* && rollup -c && npm run types",
     "lint": "eslint **/*.js -f unix",
     "prepack": "npm run build",
-    "test": "jest",
+    "test": "vitest run",
     "types": "tsc index.js --allowJs --declaration --declarationMap --emitDeclarationOnly --outDir dist/types"
   },
   "dependencies": {
@@ -25,12 +25,9 @@
   "devDependencies": {
     "@activewidgets/datagrid": "3.1.5",
     "@activewidgets/frameworks": "3.1.5",
-    "@activewidgets/testing": "0.0.6",
-    "@babel/core": "^7",
-    "@babel/preset-env": "^7",
-    "@rollup/plugin-babel": "^5",
+    "@activewidgets/testing": "0.1.0",
     "@rollup/plugin-node-resolve": "^13",
-    "@testing-library/preact": "^2",
+    "@testing-library/preact": "^3",
     "eslint": "^8",
     "preact": "10.4.4",
     "rimraf": "^3",
@@ -58,20 +55,10 @@
     "dist",
     "*/unit.js"
   ],
-  "jest": {
-    "preset": "@activewidgets/testing",
-    "moduleNameMapper": {
-      "@activewidgets/components": "@activewidgets/datagrid",
-      "@activewidgets/options": "<rootDir>/index.js"
-    },
-    "testMatch": [
-      "<rootDir>/*/unit.js"
-    ]
-  },
   "postcss": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/activewidgets/options.git"
+    "url": "https://github.com/activewidgets/options.git"
   },
   "keywords": [
     "react"
