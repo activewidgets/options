@@ -4,11 +4,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-function plugin({props, update, on, cls}){
+function plugin({props, update, cls}){
 
     let selected = 0, {api, callbacks} = props();
 
-    on('click', function({target}){
+    callbacks.click.push(function({target}){
         let cell = api.cellFromElement(target);
         if (cell && cell.section === 'main'){
             selected = cell.row.index;
