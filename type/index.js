@@ -5,9 +5,7 @@
  */
 
 
-function plugin({props}, name, params){
-
-    let {callbacks} = props();
+function plugin({callbacks}, name, params){
 
     callbacks.beforeColumn.push((column) => {
         if (column.type === name){

@@ -5,9 +5,7 @@
  */
 
 
-function plugin({props}, fn){
-
-    let {callbacks} = props();
+function plugin({callbacks}, fn){
 
     if(!callbacks.params){
         callbacks.params = [];

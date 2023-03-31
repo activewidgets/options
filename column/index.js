@@ -5,9 +5,7 @@
  */
 
 
-function plugin({props}, config){
-
-    let {callbacks} = props();
+function plugin({callbacks}, config){
 
     if (typeof config == 'function'){
         callbacks.column.push(config);

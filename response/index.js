@@ -5,8 +5,7 @@
  */
 
 
-function plugin({props}, fn){
-    let {callbacks} = props();
+function plugin({callbacks}, fn){
     callbacks.response = fn;
 }
 

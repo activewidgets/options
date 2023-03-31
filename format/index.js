@@ -5,9 +5,9 @@
  */
 
 
-function plugin({props}, name, value, fn){
+function plugin({state, callbacks}, name, value, fn){
 
-    let {callbacks, config} = props();
+    let {config} = state;
 
 
     function processFormat(col){

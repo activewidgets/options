@@ -5,9 +5,9 @@
  */
 
 
-function plugin({props, assign}, baseURL, fetchConfig){
+function plugin({props, state, api, callbacks, assign}, baseURL, fetchConfig){
 
-    let {api, callbacks, config} = props();
+    let {config} = state;
 
     if (baseURL){
         config.baseURL = baseURL;
