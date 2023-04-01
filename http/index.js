@@ -4,8 +4,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+const {assign} = Object;
 
-function plugin({props, state, api, callbacks, assign}, baseURL, fetchConfig){
+function plugin({props, state, api, callbacks}, baseURL, fetchConfig){
 
     let {config} = state;
 
