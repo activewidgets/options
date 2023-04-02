@@ -27,7 +27,7 @@ function plugin({props, state, api, callbacks}, baseURL, fetchConfig){
 
     function defineOperation(path, fn){
 
-        let {identity} = props(),
+        let {identity} = props,
             info;
 
         function send(path, cfg){
