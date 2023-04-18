@@ -25,7 +25,7 @@
   "devDependencies": {
     "@activewidgets/datagrid": "3.3.1",
     "@activewidgets/frameworks": "3.3.1",
-    "@activewidgets/testing": "0.1.1",
+    "@activewidgets/testing": "0.1.2",
     "@rollup/plugin-node-resolve": "^15",
     "@rollup/plugin-terser": "^0.4",
     "@testing-library/preact": "^3",
