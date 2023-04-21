@@ -4,9 +4,12 @@
   "description": "ActiveWidgets grid configuration options",
   "author": "ActiveWidgets SARL",
   "license": "MIT",
+  "type": "module",
   "main": "./dist/options.js",
-  "module": "./dist/esm/options.js",
   "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": "./dist/options.js"
+  },
   "files": [
     "dist",
     "LICENSE",

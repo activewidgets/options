@@ -41,21 +41,18 @@ function read(filename){
 }
 
 
-function config(name, input){
+function config(input){
 
     let dir = path.dirname(input),
         pkg = JSON.parse(read(path.join(dir, 'package.json'))),
         main = path.join(dir, pkg.main),
-        module = path.join(dir, pkg.module),
         sourcemap = true,
-        banner = getBanner(pkg.name),
-        extend = true;
+        banner = getBanner(pkg.name);
 
     return {
         input,
         output: [
-            {file: main, format: 'umd', sourcemap, banner, globals, name, extend},
-            {file: module, format: 'esm', sourcemap, banner}
+            {file: main, format: 'esm', sourcemap, banner}
         ],
         external: Object.keys(globals),
         plugins
@@ -63,4 +60,4 @@ function config(name, input){
 }
 
 
-export default config('ActiveWidgets.Options', 'index.js');
+export default config('index.js');
