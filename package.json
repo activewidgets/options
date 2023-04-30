@@ -5,10 +5,11 @@
   "author": "ActiveWidgets SARL",
   "license": "MIT",
   "type": "module",
-  "main": "./dist/options.js",
+  "main": "./dist/index.js",
   "types": "./dist/types/index.d.ts",
+  "sideEffects": false,
   "exports": {
-    ".": "./dist/options.js"
+    ".": "./dist/index.js"
   },
   "files": [
     "dist",
@@ -16,11 +17,11 @@
     "README.md"
   ],
   "scripts": {
-    "build": "npm run lint && rimraf --glob dist/* && rollup -c && npm run types",
-    "lint": "eslint **/*.js -f unix",
+    "build": "npm run lint && node build.js && npm run types",
+    "lint": "eslint src/**/*.js -f unix",
     "prepack": "npm run build",
-    "test": "vitest run",
-    "types": "tsc index.js --allowJs --declaration --declarationMap --emitDeclarationOnly --outDir dist/types"
+    "test": "npm run build && vitest run",
+    "types": "tsc src/index.js --allowJs --declaration --declarationMap --emitDeclarationOnly --outDir dist/types"
   },
   "dependencies": {
     "@activewidgets/experimental": "3.4.4"
@@ -28,15 +29,13 @@
   "devDependencies": {
     "@activewidgets/datagrid": "3.4.4",
     "@activewidgets/frameworks": "3.4.4",
-    "@activewidgets/testing": "0.1.2",
-    "@rollup/plugin-node-resolve": "^15",
-    "@rollup/plugin-terser": "^0.4",
+    "@activewidgets/testing": "0.1.3",
     "@testing-library/preact": "^3",
     "eslint": "^8",
     "preact": "10.4.4",
-    "rimraf": "^4",
-    "rollup": "^3",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vite": "^4",
+    "vitest": "latest"
   },
   "eslintConfig": {
     "extends": "eslint:recommended",
@@ -56,7 +55,7 @@
   },
   "eslintIgnore": [
     "dist",
-    "*/unit.js"
+    "src/**/unit.js"
   ],
   "postcss": {},
   "repository": {

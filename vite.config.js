@@ -3,12 +3,12 @@ import testing from '@activewidgets/testing/plugin';
 
 export default {
     plugins: [
-        testing('*/unit.js')
+        testing('src/**/unit.js')
     ],
     resolve: {
         alias: {
-            "@activewidgets/components": "@activewidgets/datagrid",
-            "@activewidgets/options": resolve('./index.js')
+            "@activewidgets/components": "@activewidgets/datagrid/index.js",
+            "@activewidgets/options": resolve('./dist/index.js')
         }    
     }
 }
