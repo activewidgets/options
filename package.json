@@ -1,6 +1,6 @@
 {
   "name": "@activewidgets/options",
-  "version": "3.4.4",
+  "version": "3.5.0",
   "description": "ActiveWidgets grid configuration options",
   "author": "ActiveWidgets SARL",
   "license": "MIT",
@@ -24,11 +24,11 @@
     "types": "tsc src/index.js --allowJs --declaration --declarationMap --emitDeclarationOnly --outDir dist/types"
   },
   "dependencies": {
-    "@activewidgets/experimental": "3.4.4"
+    "@activewidgets/experimental": "3.5.0"
   },
   "devDependencies": {
-    "@activewidgets/datagrid": "3.4.4",
-    "@activewidgets/frameworks": "3.4.4",
+    "@activewidgets/datagrid": "3.5.0",
+    "@activewidgets/frameworks": "3.5.0",
     "@activewidgets/testing": "0.1.3",
     "@testing-library/preact": "^3",
     "eslint": "^8",
